@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Phenotyping airway data</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Rani Basna" />
+    <meta name="date" content="2021-10-15" />
+    <script src="libs/header-attrs-2.17/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/tile-view-0.2.6/tile-view.css" rel="stylesheet" />
+    <script src="libs/tile-view-0.2.6/tile-view.js"></script>
+    <link href="libs/panelset-0.2.6/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset-0.2.6/panelset.js"></script>
+    <script src="libs/clipboard-2.0.6/clipboard.min.js"></script>
+    <link href="libs/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.js"></script>
+    <script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})</script>
+    <script src="libs/fabric-4.3.1/fabric.min.js"></script>
+    <link href="libs/xaringanExtra-scribble-0.0.1/scribble.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-scribble-0.0.1/scribble.js"></script>
+    <script>document.addEventListener('DOMContentLoaded', function() { window.xeScribble = new Scribble({"pen_color":["#FF0000"],"pen_size":3,"eraser_size":30,"palette":[]}) })</script>
+    <link href="libs/xaringanExtra-extra-styles-0.2.6/xaringanExtra-extra-styles.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-progressBar-0.0.1/progress-bar.js"></script>
+    <link href="libs/font-awesome-animation-1.0/font-awesome-animation-emi.css" rel="stylesheet" />
+    <script src="libs/fontawesome-5.0.13/js/fontawesome-all.min.js"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous">
+    </script>
+
+    <script>
+    $(document).ready(function() {
+      var h2 = $( ":not(.toc) > h2" );
+      var items = h2.map(
+        function(){return $(this).text()}
+        ).get()
+      items.shift(); // Remove first item (title)
+      items.pop();   // Remove last item (spurious???)
+      var item_list = items.join("</li><li>");
+      var toc = "<ul><li>" + item_list + "</li></ul>";
+      $(".toc > h2").after(toc);
+      
+    });
+    </script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="css/Rmen.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+class: title-slide, left, top 
+background-image: url(https://source.unsplash.com/Du41jIaI5Ww)
+background-position: bottom left
+background-size: cover
+
+
+
+.pull-left[
+  
+  # Phenotyping airway data
+  ## a decision tree approach
+  
+  ### Rani Basna
+  ### Krefting Research Centre
+  
+  ### 2021-10-15
+]
+
+
+
+
+
+
+
+
+
+
+&lt;style type="text/css"&gt;
+.highlight-last-item &gt; ul &gt; li, 
+.highlight-last-item &gt; ol &gt; li {
+  opacity: 0.5;
+}
+.highlight-last-item &gt; ul &gt; li:last-of-type,
+.highlight-last-item &gt; ol &gt; li:last-of-type {
+  opacity: 1;
+}
+&lt;/style&gt;
+
+
+
+&lt;style&gt;
+.left-column {
+  color: #777;
+  width: 30%;
+  height: 92%;
+  float: left;
+  font-size: 18px;
+}
+
+.left-column h2:last-of-type, .left-column h3:last-child {
+  color: #000;
+}
+
+.left-column1 {
+  color: #777;
+  width: 34%;
+  height: 92%;
+  float: left;
+  font-size: 18px;
+}
+
+.right-column {
+  width: 67%;
+  float: right;
+  padding-top: 0em;
+}
+
+.right-column1 {
+  width: 63%;
+  float: right;
+  padding-top: 0em;
+}
+&lt;/style&gt;
+
+
+<div>
+<style type="text/css">.xaringan-extra-logo {
+width: 170px;
+height: 200px;
+z-index: 0;
+background-image: url(https://medarbetarportalen.gu.se/digitalAssets/1479/1479236_logucen1r.jpg);
+background-size: contain;
+background-repeat: no-repeat;
+position: absolute;
+top:1em;right:1.7em;
+}
+</style>
+<script>(function () {
+  let tries = 0
+  function addLogo () {
+    if (typeof slideshow === 'undefined') {
+      tries += 1
+      if (tries < 10) {
+        setTimeout(addLogo, 100)
+      }
+    } else {
+      document.querySelectorAll('.remark-slide-content:not(.inverse):not(.hide_logo)')
+        .forEach(function (slide) {
+          const logo = document.createElement('div')
+          logo.classList = 'xaringan-extra-logo'
+          logo.href = null
+          slide.appendChild(logo)
+        })
+    }
+  }
+  document.addEventListener('DOMContentLoaded', addLogo)
+})()</script>
+</div>
+
+
+
+
+
+
+<style>.xe__progress-bar__container {
+  top:0;
+  opacity: 1;
+  position:absolute;
+  right:0;
+  left: 0;
+}
+.xe__progress-bar {
+  height: 0.25em;
+  background-color: #0051BA;
+  width: calc(var(--slide-current) / var(--slide-total) * 100%);
+}
+.remark-visible .xe__progress-bar {
+  animation: xe__progress-bar__wipe 200ms forwards;
+  animation-timing-function: cubic-bezier(.86,0,.07,1);
+}
+@keyframes xe__progress-bar__wipe {
+  0% { width: calc(var(--slide-previous) / var(--slide-total) * 100%); }
+  100% { width: calc(var(--slide-current) / var(--slide-total) * 100%); }
+}</style>
+
+
+
+
+
+
+
+&lt;style&gt;
+.larger {
+font-size: 1.2em
+}
+&lt;/style&gt;
+
+
+---
+class: toc
+
+## table of contents
+
+---
+class: bold-last-item, highlight-last-item, hide_logo, left
+background-image: url(http://scikit-learn.sourceforge.net/0.6/_images/plot_mean_shift.png)
+background-position: right
+background-size: 60%
+
+## **Clustering Challenges**
+
+.left-column[
+
+- One of the main issues in .blue[**clustering**] is the choice of .blue[**distance**]. 
+{{content}}
+
+]
+
+--
+
+- Usually, a distance function is chosen a **priori** before starting the clustering assignment.
+{{content}}
+
+--
+
+
+- For instance, the **euclidean** distance is a very famous choice.
+{{content}}
+
+
+---
+class: hide_logo
+background-image: url(https://scikit-learn.org/stable/_images/sphx_glr_plot_cluster_comparison_001.png)
+background-size: contain
+background-position: middle 
+
+---
+class: bold-last-item, highlight-last-item, hide_lego
+
+## A good distance function <span>&lt;i class="fas  fa-trophy faa-tada animated faa-fast "&gt;&lt;/i&gt;</span>
+
+--
+
+- .large[Incorporate **categorical** variables. ]
+
+--
+
+- .large[Impose appropriate attribute **weights** (in particular, be insensitive to linear scaling of the attributes)]
+
+--
+
+- .large[Handle **missing** values and outliers gracefully. ]
+
+--
+
+- .large[Deals with the curse of **dimensionality**.]
+
+???
+
+Distance between the data points and the origin of the coordinate system grows as a square root of the number of dimensions
+
+--
+
+- .large[**Buttrey and Whitaker (2015)** .content-box-blue[ described an approach that uses a set of classification and **regression trees** that collectively determine dissimilarities that seems to perform well in both numeric and mixed data, particularly in the presence of noise.]]
+
+--
+
+- .large[In essence, we are **learning** the right distance function for this data set.]
+
+---
+class: section, middle, center, inverse, hide_lego
+
+.f3[
+## Small, simple, shallow intoduction
+***
+]
+
+--
+
+
+## Decision Trees
+
+---
+name: DT_1
+background-image: url(figures/DT_1.png)
+background-size: contain
+background-position: middle 
+
+---
+name: DT_2
+background-image: url(figures/DT_2.png)
+background-size: contain
+background-position: middle 
+
+---
+name: DT_3
+background-image: url(figures/DT_3.png)
+background-size: contain
+background-position: middle 
+
+---
+name: DT_4
+background-image: url(figures/DT_4.png)
+background-size: contain
+background-position: middle 
+
+---
+name: DT_5
+background-image: url(figures/DT_5.png)
+background-size: contain
+background-position: middle 
+
+
+---
+class: bold-last-item, highlight-last-item, hide_lego
+
+## Clustering using a tree-based approach
+
+- .large[In a clustering problem, there is no **response** variable.]
+
+--
+
+- .large[We construct a tree for **each** variable in turn, using it as the **response** and all others are potential predictors. ]
+
+--
+
+- .large[The **surviving** set of trees are used to define related measures of **dissimilarity**. ]
+
+--
+
+- .large[.content-box-blue[The distance between any two participants was calculated using a tree-based clustering algorithm that addresses multi-collinearity among variables.] ]
+
+--
+
+- .large[This dissimilarity matrix can be **fed** to any clustering algorithms.]
+
+---
+class: bold-last-item, highlight-last-item, hide_lego
+
+
+## Clustering using a tree-based approach 
+
+--
+
+.blockquote[
+### 
+- In the simplest, the dissimilarity between two observations i and j, say, `\(d(i, j)\)`, is given by the proportion of trees in which those two observations land in different leaves. 
+]
+
+
+--
+.blockquote[
+### 
+- That is, the dissimilarity between observations associated with a particular tree t is `\(d_t (i, j) = 0\)` or 1, depending on whether i and j do, or do not, fall into the same leaf under tree t. ]
+
+--
+
+.blockquote[
+### 
+- Then over a set of T trees, `\(d(i, j) = ∑_t d_t (i, j)/T\)`. ]
+
+
+
+
+---
+
+
+
+
+
+
+
+
+
+class: section, middle, center, inverse, hide_lego
+
+
+.f3[
+## Clustering with Kmeans on the original data
+***
+]
+
+--
+
+## using the euclidian distance
+
+---
+
+
+![](figures/TsneOriginal-1.png)
+
+
+]
+]
+
+
+---
+class: section, middle, center, inverse
+
+.f3[
+# Decesion tree distance and hierarchical clustering
+***
+]
+
+--
+
+## Use decision tree to learn the right distance matrix 
+
+---
+class: hide_logo
+exclude: true
+
+
+```r
+# important to set a seed here
+set.seed(33)
+airway.tc1 &lt;- treeClust(Airway2, d.num = 1, control = treeClust.control(return.trees = TRUE, return.dists = TRUE))
+# hierarchical clustering with ward distance
+h_tree &lt;- hcut(airway.tc1$dists, 6, isdiss = TRUE, hc_method = 'ward.D2')
+```
+
+---
+## find the optimal number of clusters
+
+
+
+
+
+![](figures/OptClust_2-1.png)
+
+
+---
+name: UmapPlot
+
+
+
+
+
+
+
+
+
+![](figures/umap_plot-1.png)
+
+---
+class: section, middle, center, inverse
+
+.f3[
+# Validating the clustering results
+***
+]
+
+--
+
+## Useing random forest 
+
+---
+background-image: url(DT_clustering_2.png)
+background-size: contain
+background-position: middle
+
+---
+## Cluster describtions
+
+- cluster 1 Smoking-associted cluster
+- cluster 2 Older healthy adults
+- cluster 3 Sputum cluster
+- cluster 4 Wheezing adults
+- cluster 5 Healthy young adults
+- cluster 6 Symptomatic females
+
+
+---
+## Shiny app was developed for visulizing the clusters
+
+[Shinyapp Link](https://rani-shiny.shinyapps.io/visualise_airway_clustering/#section-histogram-and-box-plots)
+
+
+
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"highlightLanguage": "r",
+"countIncrementalSlides": false,
+"ratio": "16:9",
+"slideNumberFormat": "%current%"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

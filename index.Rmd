@@ -355,7 +355,7 @@ class: bold-last-item, highlight-last-item, hide_lego
 
 ---
 ```{r dataPreprocssing, include=FALSE, warning=FALSE, message=FALSE}
-mydata <- read.csv('/home/rstudio/AirwayClusteringPresentation/Original_Data/AirwayDiseasePhenotypingDataSets5/WSAS_AndOLIN_AirwayDiseasePhenotyping.csv')
+mydata <- read.csv('/home/rstudio/AirwayClusteringPresentation/AirwayClusteringR/Original_Data/AirwayDiseasePhenotypingDataSets5/WSAS_AndOLIN_AirwayDiseasePhenotyping.csv')
 Airway2 <- Get_Binary_data(mydata)
 ```
 
@@ -447,7 +447,7 @@ max.nc = 10, method = 'ward.D2')
 ```
 
 ```{r OptClust_2, fig.show="hide", include=FALSE, message=FALSE, warning=FALSE, cache=TRUE}
-fviz_nbclust(Nb_converted_DT[3])
+# fviz_nbclust(Nb_converted_DT[3])
 ```
 
 ![](`r knitr::fig_chunk("OptClust_2", "png")`)
